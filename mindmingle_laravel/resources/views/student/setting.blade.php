@@ -88,17 +88,20 @@
 						<h5 class="card-header-title mb-0">Update password</h5>
 					</div>
 					<!-- Card body START -->
+					<form action="{{ route('student.password.update', Auth::user()->id) }}" method="POST">
+						@csrf
+						@method('PUT')
 					<div class="card-body">
 						<!-- Current password -->
 						<div class="mb-3">
 							<label class="form-label">Current password</label>
-							<input class="form-control" type="password" placeholder="Enter current password">
+							<input class="form-control" name="password" type="password" placeholder="Enter current password">
 						</div>
 						<!-- New password -->
 						<div class="mb-3">
 							<label class="form-label"> Enter new password</label>
 							<div class="input-group">
-								<input class="form-control" type="password" placeholder="Enter new password">
+								<input class="form-control" name="new_password" id="new-password" autocomplete="new-password" type="password" placeholder="Enter new password">
 								<span class="input-group-text p-0 bg-transparent">
 									<i class="far fa-eye cursor-pointer p-2 w-40px"></i>
 								</span>
@@ -108,13 +111,14 @@
 						<!-- Confirm password -->
 						<div>
 							<label class="form-label">Confirm new password</label>
-							<input class="form-control" type="password" placeholder="Enter new password">
+							<input class="form-control" type="password" id="password_confirmation" autocomplete="new-password" placeholder="Enter new password">
 						</div>
 						<!-- Button -->
 						<div class="d-flex justify-content-end mt-4">
-							<button type="button" class="btn btn-primary mb-0">Change password</button>
+							<button type="submit" class="btn btn-primary mb-0">Change password</button>
 						</div>
 					</div>
+				</form>
 					<!-- Card body END -->
 				</div>
 			</div>
@@ -141,7 +145,7 @@
 								account</label>
 						</div>
 						<a href="#" class="btn btn-success-soft mb-2 mb-sm-0">Keep my account</a>
-						<a href="#" class="btn btn-danger mb-0">Delete my account</a>
+						<a href="{{ route('student.delete') }}" class="btn btn-danger mb-0">Delete my account</a>
 					</div>
 				</div>
 				<!-- Title and select END -->

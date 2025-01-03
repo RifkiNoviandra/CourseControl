@@ -1,6 +1,18 @@
 @extends('instructor.layouts.main')
 @section('title', 'Settings')
 @section('profile')
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
 	<div class="col-xl-12">
 		<!-- Edit profile START -->
 		<div class="card bg-transparent border rounded-3">
@@ -89,40 +101,44 @@
 						<h5 class="card-header-title mb-0">Social media profile</h5>
 					</div>
 					<!-- Card body START -->
+					<form action="{{ route('instructor.socmed.update', Auth::user()->id) }}" method="POST">
+						@csrf
+						@method('PUT')
 					<div class="card-body">
 						<!-- Facebook username -->
 						<div class="mb-3">
 							<label class="form-label"><i class="fab fa-facebook text-facebook me-2"></i>Enter facebook
 								username</label>
-							<input class="form-control" type="text" value="loristev" placeholder="Enter username">
+							<input class="form-control" type="text" name="social_facebook" value="{{ $user['social_facebook'] }}" placeholder="Enter username">
 						</div>
 
 						<!-- Twitter username -->
 						<div class="mb-3">
 							<label class="form-label"><i class="bi bi-twitter text-twitter me-2"></i>Enter twitter
 								username</label>
-							<input class="form-control" type="text" value="loristev" placeholder="Enter username">
+							<input class="form-control" type="text" name="social_twitter" value="{{ $user['social_twitter'] }}" placeholder="Enter username">
 						</div>
 
 						<!-- Instagram username -->
 						<div class="mb-3">
 							<label class="form-label"><i class="fab fa-instagram text-instagram-gradient me-2"></i>Enter
 								instagram username</label>
-							<input class="form-control" type="text" value="loristev" placeholder="Enter username">
+							<input class="form-control" type="text" name="social_instagram" value="{{ $user['social_instagram'] }}" placeholder="Enter username">
 						</div>
 
 						<!-- Youtube -->
 						<div class="mb-3">
 							<label class="form-label"><i class="fab fa-youtube text-youtube me-2"></i>Add your youtube
 								profile URL</label>
-							<input class="form-control" type="text" value="https://www.youtube.com/in/Eduport-05620abc"
+							<input class="form-control" type="text" name="social_youtube" value="{{ $user['social_youtube'] }}"
 								placeholder="Enter username">
 						</div>
 
 						<!-- Button -->
 						<div class="d-flex justify-content-end mt-4">
-							<button type="button" class="btn btn-primary mb-0">Save changes</button>
+							<button type="submit" class="btn btn-primary mb-0">Save changes</button>
 						</div>
+					</form>
 					</div>
 					<!-- Card body END -->
 				</div>
@@ -137,17 +153,20 @@
 						<h5 class="card-header-title mb-0">Update password</h5>
 					</div>
 					<!-- Card body START -->
+					<form action="{{ route('instructor.password.update', Auth::user()->id) }}" method="POST">
+						@csrf
+						@method('PUT')
 					<div class="card-body">
 						<!-- Current password -->
 						<div class="mb-3">
 							<label class="form-label">Current password</label>
-							<input class="form-control" type="password" placeholder="Enter current password">
+							<input class="form-control" type="password" name="password" placeholder="Enter current password">
 						</div>
 						<!-- New password -->
 						<div class="mb-3">
 							<label class="form-label"> Enter new password</label>
 							<div class="input-group">
-								<input class="form-control" type="password" placeholder="Enter new password">
+								<input class="form-control" type="password" id="new-password" name="new_password" autocomplete="new-password" placeholder="Enter new password">
 								<span class="input-group-text p-0 bg-transparent">
 									<i class="far fa-eye cursor-pointer p-2 w-40px"></i>
 								</span>
@@ -157,12 +176,13 @@
 						<!-- Confirm password -->
 						<div>
 							<label class="form-label">Confirm new password</label>
-							<input class="form-control" type="password" placeholder="Enter new password">
+							<input class="form-control" id="password_confirmation" autocomplete="new-password" type="password" placeholder="Enter new password">
 						</div>
 						<!-- Button -->
 						<div class="d-flex justify-content-end mt-4">
-							<button type="button" class="btn btn-primary mb-0">Change password</button>
+							<button type="submit" class="btn btn-primary mb-0">Change password</button>
 						</div>
+					</form>
 					</div>
 					<!-- Card body END -->
 				</div>
@@ -192,7 +212,7 @@
 								account</label>
 						</div>
 						<a href="#" class="btn btn-success-soft mb-2 mb-sm-0">Keep my account</a>
-						<a href="#" class="btn btn-danger mb-0">Delete my account</a>
+						<a href="{{ route('instructor.delete') }}" class="btn btn-danger mb-0">Delete my account</a>
 					</div>
 				</div>
 				<!-- Title and select END -->

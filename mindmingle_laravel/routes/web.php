@@ -122,7 +122,9 @@ Route::middleware(['auth', 'student'])->group(function () {
     Route::get('student/profile', [DashboardStudentController::class, 'setting'])->middleware('verified')->name('student.profile');
     Route::get('student/my-course', [MyCoursecontroller::class, 'index'])->middleware('verified')->name('student.mycourse');
     Route::get('student/delete/account', [DashboardStudentController::class, 'deleteAccount'])->middleware('verified')->name('student.update');
+    Route::put('student/password/update/{id}', [DashboardStudentController::class, 'updatePass'])->middleware('verified')->name('student.password.update');
     Route::put('student/setting/update/{id}', [DashboardStudentController::class, 'update'])->middleware('verified')->name('student.profile.update');
+    Route::get('student/delete/account', [DashboardInstructorController::class, 'deleteAccount'])->middleware('verified')->name('student.delete');
     Route::resource('student', DashboardStudentController::class)->middleware('verified');
 });
 
@@ -142,6 +144,8 @@ Route::middleware(['auth', 'instructor'])->group(function () {
     Route::get('instructor/orders', [OrderCourseController::class, 'index'])->middleware('verified')->name('instructor.order');
     Route::get('instructor/student', [StudentCourseController::class, 'index'])->middleware('verified')->name('instructor.student');
     Route::put('instructor/setting/update/{id}', [DashboardInstructorController::class, 'update'])->middleware('verified')->name('instructor.profile.update');
+    Route::put('instructor/socmed/update/{id}', [DashboardInstructorController::class, 'updateSocmed'])->middleware('verified')->name('instructor.socmed.update');
+    Route::put('instructor/password/update/{id}', [DashboardInstructorController::class, 'updatePass'])->middleware('verified')->name('instructor.password.update');
     Route::get('instructor/delete/account', [DashboardInstructorController::class, 'deleteAccount'])->middleware('verified')->name('instructor.delete');
     Route::resource('instructor', DashboardInstructorController::class)->middleware('verified');
 });

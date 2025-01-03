@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class DashboardStudentController extends Controller
@@ -24,9 +25,18 @@ class DashboardStudentController extends Controller
         return view('student.setting')->with('user', $data);
     }
 
-    public function deleteAccount()
-    {
-        return view('student.delete');
+    public function deleteAccount() {
+        $data = User::find(Auth::user()->id);
+
+        $delete = $data->delete();
+
+        if ($delete) {
+            Alert::success('Success', 'Data Deleted!');
+        } else {
+            Alert::error('Error', 'Failed to Delete');
+            return redirect()->route('student.setting')->with('error', 'Failed Delete Account');
+        }
+        return redirect()->route('login')->with('message', 'Data Deleted');
     }
 
     public function profile()
@@ -138,6 +148,35 @@ class DashboardStudentController extends Controller
             return redirect()->route('student.setting')->with('error', 'Failed to add new Course category');
         }
         return redirect()->route('student.setting')->with('message', 'Data Profile Updated');
+    }
+
+    public function updatePass(Request $request, $id)
+    {
+        $user = User::where('id', $id)->first();
+
+        $request->validate([
+            'new_password' => 'required|string|min:8',
+            'password' => 'required'
+        ]);
+
+        if (!Hash::check($request->password, $user['password'])) {
+            return response([
+                Hash::check($request->password, $user['password']),
+                $request->password,
+            ]);
+            return redirect()->route('instructor.setting')->with('message', 'Password Tidak Sesuai');
+        }
+
+        $update_val['password'] = Hash::make($request->new_password);
+        $update = $user->update($update_val);
+
+        if ($update) {
+            Alert::success('Success', 'Data Updated!');
+        } else {
+            Alert::error('Error', 'Failed to Update Profile');
+            return redirect()->route('instructor.setting')->with('error', 'Failed to add new Course category');
+        }
+        return redirect()->route('instructor.setting')->with('message', 'Data Profile Updated');
     }
 
     /**

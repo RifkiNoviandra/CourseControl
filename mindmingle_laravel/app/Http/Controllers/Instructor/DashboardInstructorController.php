@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class DashboardInstructorController extends Controller
@@ -21,7 +22,17 @@ class DashboardInstructorController extends Controller
     }
 
     public function deleteAccount() {
-        return view('instructor.delete');
+        $data = User::find(Auth::user()->id);
+
+        $delete = $data->delete();
+
+        if ($delete) {
+            Alert::success('Success', 'Data Deleted!');
+        } else {
+            Alert::error('Error', 'Failed to Delete');
+            return redirect()->route('instructor.setting')->with('error', 'Failed Delete Account');
+        }
+        return redirect()->route('login')->with('message', 'Data Deleted');
     }
     /**
      * Show the form for creating a new resource.
@@ -118,6 +129,58 @@ class DashboardInstructorController extends Controller
         }
 
         $update = $user->update($update_val);
+
+        if ($update) {
+            Alert::success('Success', 'Data Updated!');
+        } else {
+            Alert::error('Error', 'Failed to Update Profile');
+            return redirect()->route('instructor.setting')->with('error', 'Failed to add new Course category');
+        }
+        return redirect()->route('instructor.setting')->with('message', 'Data Profile Updated');
+    }
+
+    public function updatePass(Request $request, $id)
+    {
+        $user = User::where('id', $id)->first();
+
+        $request->validate([
+            'new_password' => 'required|string|min:8',
+            'password' => 'required'
+        ]);
+
+        if (!Hash::check($request->password, $user['password'])) {
+            return response([
+                Hash::check($request->password, $user['password']),
+                $request->password,
+            ]);
+            return redirect()->route('instructor.setting')->with('message', 'Password Tidak Sesuai');
+        }
+
+        $update_val['password'] = Hash::make($request->new_password);
+        $update = $user->update($update_val);
+
+        if ($update) {
+            Alert::success('Success', 'Data Updated!');
+        } else {
+            Alert::error('Error', 'Failed to Update Profile');
+            return redirect()->route('instructor.setting')->with('error', 'Failed to add new Course category');
+        }
+        return redirect()->route('instructor.setting')->with('message', 'Data Profile Updated');
+    }
+
+    function updateSocmed(Request $request, $id){
+        $request->validate([
+            'social_facebook' => 'required',
+            'social_twitter' => 'required',
+            'social_instagram' => 'required',
+            'social_youtube' => 'required',
+        ]);
+
+        $user = User::where('id', $id)->first();
+
+        $input = $request->only('social_facebook','social_instagram','social_youtube','social_twitter');
+
+        $update = $user->update($input);
 
         if ($update) {
             Alert::success('Success', 'Data Updated!');
