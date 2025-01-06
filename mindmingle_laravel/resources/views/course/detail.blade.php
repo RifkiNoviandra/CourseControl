@@ -809,14 +809,14 @@
 								<!-- Video START -->
 								<div class="card shadow p-2 mb-4 z-index-9">
 									<div class="overflow-hidden rounded-3">
-										<img src="{{ asset('storage/masterclass/thumbnail/' . $masterclass->masterclass_thumbnail) }}"
+										<img src="{{ url('/masterclass/thumbnails/' . $masterclass->masterclass_thumbnail) }}"
 											class="card-img" alt="course image">
 										<!-- Overlay -->
 										<div class="bg-overlay bg-dark opacity-6"></div>
 										<div class="card-img-overlay d-flex align-items-start flex-column p-3">
 											<!-- Video button and link -->
 											<div class="m-auto">
-												<a href="{{ asset('storage/masterclass/video/preview/' . $masterclass->masterclass_video_preview) }}"
+												<a href="{{ url('/masterclass/previews/' . $masterclass->masterclass_video_preview) }}"
 													class="btn btn-lg text-danger btn-round btn-white-shadow mb-0" data-glightbox=""
 													data-gallery="course-video">
 													<i class="fas fa-play"></i>
@@ -866,7 +866,7 @@
 								<!-- Video END -->
 
 								<!-- Course info START -->
-								<div class="card card-body shadow p-4 mb-4">
+								{{-- <div class="card card-body shadow p-4 mb-4">
 									<!-- Title -->
 									<h4 class="mb-3">This course includes</h4>
 									<ul class="list-group list-group-borderless">
@@ -887,7 +887,7 @@
 											<span>{{ $masterclass->created_at }}</span>
 										</li>
 									</ul>
-								</div>
+								</div> --}}
 								<!-- Course info END -->
 							</div>
 						</div><!-- Row End -->

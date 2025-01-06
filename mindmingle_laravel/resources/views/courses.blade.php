@@ -33,11 +33,12 @@
 			<div class="container">
 
 				<!-- Filter bar START -->
-				<form class="bg-light border p-4 rounded-3 my-4 z-index-9 position-relative" method="GET" action="categories">
+				<form class="bg-light border p-4 rounded-3 my-4 z-index-9 position-relative" method="POST" action="{{route('courses.search')}}">
+					@csrf
 					<div class="row justify-content-center g-3">
 						<!-- Input -->
 						<div class="col-xl-3">
-							<input class="form-control me-1" type="search" placeholder="Enter keyword">
+							<input class="form-control me-1" name="name" type="search" placeholder="Enter keyword">
 						</div>
 
 						<!-- Select item -->
@@ -45,40 +46,40 @@
 							<div class="row g-3">
 								<!-- Select items -->
 								<div class="col-sm-6 col-md-3 pb-2 pb-md-0">
-									<select class="form-select form-select-sm js-choice" aria-label=".form-select-sm example">
+									<select name="category" class="form-select form-select-sm js-choice" aria-label=".form-select-sm example">
 										<option value="">Categories</option>
 										@foreach ($categories as $category)
-											<option value="{{ $category->category_slug }}">{{ $category->category_name }}</option>
+											<option value="{{ $category->category_id }}">{{ $category->category_name }}</option>
 										@endforeach
 									</select>
 								</div>
 
 								<!-- Search item -->
 								<div class="col-sm-6 col-md-3 pb-2 pb-md-0">
-									<select class="form-select form-select-sm js-choice" aria-label=".form-select-sm">
+									<select name="class" class="form-select form-select-sm js-choice" aria-label=".form-select-sm">
 										<option value="">Class type</option>
 										@foreach ($class_types as $class)
-											<option value="{{ $class->class_type_slug }}">{{ $class->class_type_name }}</option>
+											<option value="{{ $class->class_type_id }}">{{ $class->class_type_name }}</option>
 										@endforeach
 									</select>
 								</div>
 
 								<!-- Search item -->
 								<div class="col-sm-6 col-md-3 pb-2 pb-md-0">
-									<select class="form-select form-select-sm js-choice" aria-label=".form-select-sm">
+									<select name="price" class="form-select form-select-sm js-choice" aria-label=".form-select-sm">
 										<option value="">Price level</option>
 										@foreach ($price_types as $price)
-											<option value="{{ $price->price_type_slug }}">{{ $price->price_type_name }}</option>
+											<option value="{{ $price->price_type_id }}">{{ $price->price_type_name }}</option>
 										@endforeach
 									</select>
 								</div>
 
 								<!-- Search item -->
 								<div class="col-sm-6 col-md-3 pb-2 pb-md-0">
-									<select class="form-select form-select-sm js-choice" aria-label=".form-select-sm">
+									<select name="skill" class="form-select form-select-sm js-choice" aria-label=".form-select-sm">
 										<option value="">Skill level</option>
 										@foreach ($masterclass_levels as $level)
-											<option value="{{ $level->masterclass_level_slug }}">{{ $level->masterclass_level_name }}</option>
+											<option value="{{ $level->masterclass_level_id }}">{{ $level->masterclass_level_name }}</option>
 										@endforeach
 									</select>
 								</div>
@@ -103,7 +104,7 @@
 								<div class="col-sm-6 col-lg-4 col-xl-3">
 									<div class="card shadow h-100">
 										<!-- Image -->
-										<img src="{{ asset('storage/masterclass/thumbnail/' . $masterclass->masterclass_thumbnail) }}"
+										<img src="{{ url('/masterclass/thumbnails/' . $masterclass->masterclass_thumbnail) }}"
 											class="card-img-top" style="width: 300px; height: 255px" alt="course image">
 										<!-- Card body -->
 										<div class="card-body pb-0">
@@ -131,7 +132,7 @@
 												<span class="h6 fw-light mb-0"><i
 														class="far fa-clock text-danger me-2"></i>{{ $masterclass->masterclass_total_duration }}
 												</span>
-												<span class="h6 fw-light mb-0"><i class="fas fa-table text-orange me-2"></i>15 Curriculum</span>
+												<span class="h6 fw-light mb-0"><i class="fas fa-table text-orange me-2"></i>{{ $masterclass->masterclass_total_curriculum }}</span>
 											</div>
 										</div>
 									</div>

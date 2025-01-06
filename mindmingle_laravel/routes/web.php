@@ -56,6 +56,7 @@ Auth::routes(['verify' => true]);
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('courses', [CourseController::class, 'index'])->name('courses');
+Route::post('courses/search', [CourseController::class, 'indexSearch'])->name('courses.search');
 Route::get('courses/{course_slug}/detail', [CourseController::class, 'show'])->name('detail.courses');
 Route::get('become/instructor', [BecomeInstructorController::class, 'index'])->name('become.instructor');
 Route::get('instructors', [InstructorListController::class, 'index'])->name('list.instructor');
@@ -124,7 +125,7 @@ Route::middleware(['auth', 'student'])->group(function () {
     Route::get('student/delete/account', [DashboardStudentController::class, 'deleteAccount'])->middleware('verified')->name('student.update');
     Route::put('student/password/update/{id}', [DashboardStudentController::class, 'updatePass'])->middleware('verified')->name('student.password.update');
     Route::put('student/setting/update/{id}', [DashboardStudentController::class, 'update'])->middleware('verified')->name('student.profile.update');
-    Route::get('student/delete/account', [DashboardInstructorController::class, 'deleteAccount'])->middleware('verified')->name('student.delete');
+    Route::get('student/delete/account', [DashboardStudentController::class, 'deleteAccount'])->middleware('verified')->name('student.delete');
     Route::resource('student', DashboardStudentController::class)->middleware('verified');
 });
 
@@ -140,6 +141,10 @@ Route::middleware(['auth', 'instructor'])->group(function () {
     Route::post('instructor/make/curriculum', [ManageCourseController::class, 'storeCurriculum'])->name('curriculum.store');
 
     Route::get('instructor/mycourse', [MakeCourseController::class, 'show'])->middleware('verified')->name('instructor.mycourse');
+    Route::post('instructor/addcourses', [MakeCourseController::class, 'store'])->middleware('verified')->name('instructor.mycourse.add');
+    Route::get('instructor/courses/edit/{id}', [MakeCourseController::class, 'edit'])->middleware('verified')->name('instructor.mycourse.edit');
+    Route::put('instructor/courses/update/{id}', [MakeCourseController::class, 'update'])->middleware('verified')->name('instructor.mycourse.update');
+    Route::get('instructor/courses/delete/{id}', [MakeCourseController::class, 'delete'])->middleware('verified')->name('instructor.mycourse.delete');
     Route::get('instructor/reviews', [ReviewCourseController::class, 'index'])->middleware('verified')->name('instructor.review');
     Route::get('instructor/orders', [OrderCourseController::class, 'index'])->middleware('verified')->name('instructor.order');
     Route::get('instructor/student', [StudentCourseController::class, 'index'])->middleware('verified')->name('instructor.student');

@@ -43,17 +43,18 @@
 						<!-- Table body START -->
 						<tbody>
 							<!-- Table item -->
+							@foreach($data as $item)
 							<tr>
 								<!-- Course item -->
 								<td>
 									<div class="d-flex align-items-center">
 										<!-- Image -->
 										<div class="w-60px">
-											<img src="{{ asset('assets/images/courses/4by3/08.jpg') }}" class="rounded" alt="">
+											<img src="{{ url('masterclass/thumbnails/'.$item->masterclass_thumbnail) }}" class="rounded" alt="">
 										</div>
 										<div class="mb-0 ms-2">
 											<!-- Title -->
-											<h6><a href="#">Building Scalable APIs with GraphQL</a></h6>
+											<h6><a href="#">{{ $item->masterclass_name }}</a></h6>
 											<!-- Info -->
 											<div class="d-sm-flex">
 												<p class="h6 fw-light mb-0 small me-3"><i class="fas fa-table text-orange me-2"></i>18 lectures</p>
@@ -69,262 +70,18 @@
 									<div class="badge bg-success bg-opacity-10 text-success">Live</div>
 								</td>
 								<!-- Price item -->
-								<td>$250</td>
+								@if($item->price_type_id == 2)
+								<td>{{ $item->masterclass_price }}</td>
+								@else
+								<td>Free</td>
+								@endif
 								<!-- Action item -->
 								<td>
-									<a href="#" class="btn btn-sm btn-success-soft btn-round me-1 mb-0"><i class="far fa-fw fa-edit"></i></a>
-									<button class="btn btn-sm btn-danger-soft btn-round mb-0"><i class="fas fa-fw fa-times"></i></button>
+									<a href="{{ route('instructor.mycourse.edit', $item->masterclass_id) }}" class="btn btn-sm btn-success-soft btn-round me-1 mb-0"><i class="far fa-fw fa-edit"></i></a>
+									<a href="{{ route('instructor.mycourse.delete', $item->masterclass_id) }}" class="btn btn-sm btn-danger-soft btn-round mb-0"><i class="fas fa-fw fa-times"></i></a>
 								</td>
 							</tr>
-
-							<!-- Table item -->
-							<tr>
-								<!-- Course item -->
-								<td>
-									<div class="d-flex align-items-center">
-										<!-- Image -->
-										<div class="w-60px">
-											<img src="{{ asset('assets/images/courses/4by3/10.jpg') }}" class="rounded" alt="">
-										</div>
-										<div class="mb-0 ms-2">
-											<!-- Title -->
-											<h6><a href="#">Bootstrap 5 From Scratch</a></h6>
-											<!-- Info -->
-											<div class="d-sm-flex">
-												<p class="h6 fw-light mb-0 small me-3"><i class="fas fa-table text-orange me-2"></i>0 lectures</p>
-												<p class="h6 fw-light mb-0 small"><i class="fas fa-check-circle text-success me-2"></i>0 Completed</p>
-											</div>
-										</div>
-									</div>
-								</td>
-								<!-- Enrolled item -->
-								<td class="text-center text-sm-start">145</td>
-								<!-- Status item -->
-								<td>
-									<div class="badge bg-secondary bg-opacity-10 text-secondary">Disable</div>
-								</td>
-								<!-- Price item -->
-								<td>$350</td>
-								<!-- Action item -->
-								<td>
-									<a href="#" class="btn btn-sm btn-success-soft btn-round me-1 mb-0"><i class="far fa-fw fa-edit"></i></a>
-									<button class="btn btn-sm btn-danger-soft btn-round mb-0"><i class="fas fa-fw fa-times"></i></button>
-								</td>
-							</tr>
-
-							<!-- Table item -->
-							<tr>
-								<!-- Course item -->
-								<td>
-									<div class="d-flex align-items-center">
-										<!-- Image -->
-										<div class="w-60px">
-											<img src="{{ asset('assets/images/courses/4by3/06.jpg') }}" class="rounded" alt="">
-										</div>
-										<div class="mb-0 ms-2">
-											<!-- Title -->
-											<h6><a href="#">Angular – The Complete Guider</a></h6>
-											<!-- Info -->
-											<div class="d-sm-flex">
-												<p class="h6 fw-light mb-0 small me-3"><i class="fas fa-table text-orange me-2"></i>37 lectures</p>
-												<p class="h6 fw-light mb-0 small"><i class="fas fa-check-circle text-success me-2"></i>20 Completed</p>
-											</div>
-										</div>
-									</div>
-								</td>
-								<!-- Enrolled item -->
-								<td class="text-center text-sm-start">145</td>
-								<!-- Status item -->
-								<td>
-									<div class="badge bg-success bg-opacity-10 text-success">Live</div>
-								</td>
-								<!-- Price item -->
-								<td>$652</td>
-								<!-- Action item -->
-								<td>
-									<a href="#" class="btn btn-sm btn-success-soft btn-round me-1 mb-0"><i class="far fa-fw fa-edit"></i></a>
-									<button class="btn btn-sm btn-danger-soft btn-round mb-0"><i class="fas fa-fw fa-times"></i></button>
-								</td>
-							</tr>
-
-							<!-- Table item -->
-							<tr>
-								<!-- Course item -->
-								<td>
-									<div class="d-flex align-items-center">
-										<!-- Image -->
-										<div class="w-60px">
-											<img src="{{ asset('assets/images/courses/4by3/02.jpg') }}" class="rounded" alt="">
-										</div>
-										<div class="mb-0 ms-2">
-											<!-- Title -->
-											<h6><a href="#">Graphic Design Masterclass</a></h6>
-											<!-- Info -->
-											<div class="d-sm-flex">
-												<p class="h6 fw-light mb-0 small me-3"><i class="fas fa-table text-orange me-2"></i>58 lectures</p>
-												<p class="h6 fw-light mb-0 small"><i class="fas fa-check-circle text-success me-2"></i>0 Completed</p>
-											</div>
-										</div>
-									</div>
-								</td>
-								<!-- Enrolled item -->
-								<td class="text-center text-sm-start">0</td>
-								<!-- Status item -->
-								<td>
-									<div class="badge bg-info bg-opacity-10 text-info">Applied</div>
-								</td>
-								<!-- Price item -->
-								<td>$245</td>
-								<!-- Action item -->
-								<td>
-									<a href="#" class="btn btn-sm btn-success-soft btn-round me-1 mb-0"><i class="far fa-fw fa-edit"></i></a>
-									<button class="btn btn-sm btn-danger-soft btn-round mb-0"><i class="fas fa-fw fa-times"></i></button>
-								</td>
-							</tr>
-
-							<!-- Table item -->
-							<tr>
-								<!-- Course item -->
-								<td>
-									<div class="d-flex align-items-center">
-										<!-- Image -->
-										<div class="w-60px">
-											<img src="{{ asset('assets/images/courses/4by3/04.jpg') }}" class="rounded" alt="">
-										</div>
-										<div class="mb-0 ms-2">
-											<!-- Title -->
-											<h6><a href="#">Learn Invision</a></h6>
-											<!-- Info -->
-											<div class="d-sm-flex">
-												<p class="h6 fw-light mb-0 small me-3"><i class="fas fa-table text-orange me-2"></i>16 lectures</p>
-												<p class="h6 fw-light mb-0 small"><i class="fas fa-check-circle text-success me-2"></i>0 Completed</p>
-											</div>
-										</div>
-									</div>
-								</td>
-								<!-- Enrolled item -->
-								<td class="text-center text-sm-start">0</td>
-								<!-- Status item -->
-								<td>
-									<div class="badge bg-danger bg-opacity-10 text-danger">Rejected</div>
-								</td>
-								<!-- Price item -->
-								<td>$365</td>
-								<!-- Action item -->
-								<td>
-									<a href="#" class="btn btn-sm btn-success-soft btn-round me-1 mb-0"><i
-											class="far fa-fw fa-edit"></i></a>
-									<button class="btn btn-sm btn-danger-soft btn-round mb-0"><i class="fas fa-fw fa-times"></i></button>
-								</td>
-							</tr>
-
-							<!-- Table item -->
-							<tr>
-								<!-- Course item -->
-								<td>
-									<div class="d-flex align-items-center">
-										<!-- Image -->
-										<div class="w-60px">
-											<img src="{{ asset('assets/images/courses/4by3/03.jpg') }}" class="rounded" alt="">
-										</div>
-										<div class="mb-0 ms-2">
-											<!-- Title -->
-											<h6><a href="#">Create a Design System in Figma</a></h6>
-											<!-- Info -->
-											<div class="d-sm-flex">
-												<p class="h6 fw-light mb-0 small me-3"><i class="fas fa-table text-orange me-2"></i>25 lectures</p>
-												<p class="h6 fw-light mb-0 small"><i class="fas fa-check-circle text-success me-2"></i>0 Completed</p>
-											</div>
-										</div>
-									</div>
-								</td>
-								<!-- Enrolled item -->
-								<td class="text-center text-sm-start">0</td>
-								<!-- Status item -->
-								<td>
-									<div class="badge bg-info bg-opacity-10 text-info">Applied</div>
-								</td>
-								<!-- Price item -->
-								<td>$135</td>
-								<!-- Action item -->
-								<td>
-									<a href="#" class="btn btn-sm btn-success-soft btn-round me-1 mb-0"><i
-											class="far fa-fw fa-edit"></i></a>
-									<button class="btn btn-sm btn-danger-soft btn-round mb-0"><i class="fas fa-fw fa-times"></i></button>
-								</td>
-							</tr>
-
-							<!-- Table item -->
-							<tr>
-								<!-- Course item -->
-								<td>
-									<div class="d-flex align-items-center">
-										<!-- Image -->
-										<div class="w-60px">
-											<img src="{{ asset('assets/images/courses/4by3/07.jpg') }}" class="rounded" alt="">
-										</div>
-										<div class="mb-0 ms-2">
-											<!-- Title -->
-											<h6><a href="#">Deep Learning with React-Native</a></h6>
-											<!-- Info -->
-											<div class="d-sm-flex">
-												<p class="h6 fw-light mb-0 small me-3"><i class="fas fa-table text-orange me-2"></i>18 lectures</p>
-												<p class="h6 fw-light mb-0 small"><i class="fas fa-check-circle text-success me-2"></i>10 Completed</p>
-											</div>
-										</div>
-									</div>
-								</td>
-								<!-- Enrolled item -->
-								<td class="text-center text-sm-start">186</td>
-								<!-- Status item -->
-								<td>
-									<div class="badge bg-success bg-opacity-10 text-success">Live</div>
-								</td>
-								<!-- Price item -->
-								<td>$256</td>
-								<!-- Action item -->
-								<td>
-									<a href="#" class="btn btn-sm btn-success-soft btn-round me-1 mb-0"><i
-											class="far fa-fw fa-edit"></i></a>
-									<button class="btn btn-sm btn-danger-soft btn-round mb-0"><i class="fas fa-fw fa-times"></i></button>
-								</td>
-							</tr>
-
-							<!-- Table item -->
-							<tr>
-								<!-- Course item -->
-								<td>
-									<div class="d-flex align-items-center">
-										<!-- Image -->
-										<div class="w-60px">
-											<img src="{{ asset('assets/images/courses/4by3/11.jpg') }}" class="rounded" alt="">
-										</div>
-										<div class="mb-0 ms-2">
-											<!-- Title -->
-											<h6><a href="#">Build Responsive Websites with HTML</a></h6>
-											<!-- Info -->
-											<div class="d-sm-flex">
-												<p class="h6 fw-light mb-0 small me-3"><i class="fas fa-table text-orange me-2"></i>42 lectures</p>
-												<p class="h6 fw-light mb-0 small"><i class="fas fa-check-circle text-success me-2"></i>25 Completed</p>
-											</div>
-										</div>
-									</div>
-								</td>
-								<!-- Enrolled item -->
-								<td class="text-center text-sm-start">345</td>
-								<!-- Status item -->
-								<td>
-									<div class="badge bg-success bg-opacity-10 text-success">Live</div>
-								</td>
-								<!-- Price item -->
-								<td>$222</td>
-								<!-- Action item -->
-								<td>
-									<a href="#" class="btn btn-sm btn-success-soft btn-round me-1 mb-0"><i
-											class="far fa-fw fa-edit"></i></a>
-									<button class="btn btn-sm btn-danger-soft btn-round mb-0"><i class="fas fa-fw fa-times"></i></button>
-								</td>
-							</tr>
+							@endforeach
 						</tbody>
 						<!-- Table body END -->
 					</table>
